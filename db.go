@@ -1,4 +1,4 @@
-package data
+package main
 
 import (
   "github.com/jmoiron/sqlx"
@@ -24,7 +24,7 @@ const (
 func connectDb() *sqlx.DB {
   var db *sqlx.DB
 
-  db = sqlx.MustConnect("sqlite3", "data/data.db")
+  db = sqlx.MustConnect("go-sqlite3", "data/data.db")
   db.MustExec(createDbQuery)
 
   return db

@@ -1,25 +1,21 @@
 package data
 
 import (
-	"gorm.io/gorm"
+	"time"
+
+	//"github.com/jmoiron/sqlx"
 )
 
 type Task struct {
-  gorm.Model
-  Code        string `gorm:"unique; not null;"`
-  Description string
+  Id        uint
+  Code      string
+  Desc      string
+  totalTime time.Time
 }
 
-func (t Task) Create() error {
+func (t Task) Create() {
   db := connectDb()
-	result := db.Create(&t)
-	if result.Error != nil {
-		return result.Error
-	}
-	db.Save(&t)
-	if result.Error != nil {
-		return result.Error
-	}
+  defer db.Close()
 
-	return nil
+  db.MustExec("INSERT INTO tasks (code, total_time) VALUES (?, ?)", t.Code, time.Now())
 }

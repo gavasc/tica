@@ -1,19 +1,31 @@
 package data
 
 import (
-	"fmt"
-
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+  "github.com/jmoiron/sqlx"
 )
 
-func connectDb() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("data/data.db"), &gorm.Config{})
-	if err != nil {
-		fmt.Println("failed to connect database")
-	}
+const (
+  createDbQuery = `CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY,
+    code TEXT,
+    description TEXT,
+    total_time INTEGER
+  );
+  CREATE TABLE IF NOT EXISTS history (
+    id INTEGER PRIMARY KEY,
+    timestamp INTEGER,
+    punch_type INTEGER,
+    task_id, INTEGER,
+    FOREIGN KEY (task_id) REFERENCES tasks(id)
+  );`
+)
 
-	db.AutoMigrate(&Task{}, &History{})
+func connectDb() *sqlx.DB {
+  var db *sqlx.DB
 
-	return db
+  db = sqlx.MustConnect("sqlite3", "data/data.db")
+  db.MustExec(createDbQuery)
+
+  return db
 }
+

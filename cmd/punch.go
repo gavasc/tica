@@ -1,13 +1,13 @@
 /*
 Copyright © 2024 gavasc <gavascdev@gmail.com>
-
 */
 package cmd
 
 import (
 	"fmt"
-  "time"
+	"time"
 
+  data "github.com/gavasc/tica/data"
 	"github.com/spf13/cobra"
 )
 
@@ -21,6 +21,7 @@ it creates it an starts its timer`,
     task := args[0]
     now := time.Now()
     fmt.Printf("Punching %s - %s\n", task, now.Format("02/01/2006 15:04")) 
+    data.Task{ Code: task }.Create()
 	},
 }
 

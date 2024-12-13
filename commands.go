@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func punchHandler(args []string) {
+func PunchHandler(args []string) {
   t := Task{Code: args[0]}
   if !t.Exists() {
     fmt.Println("Creating task ", t.Code)
@@ -30,6 +30,22 @@ func punchHandler(args []string) {
     punchIn(h)
   }
 }
+
+func ListHandler() string {
+  tasks, err := Task{}.GetAll()
+  if err != nil {
+    return err.Error()
+  }
+
+  tasksStr := ""
+  for _, task := range tasks {
+    tasksStr += fmt.Sprintf("%s -- %s -- %dmin\n", task.Code, task.Description, task.TotalTime/60)
+  }
+
+  return tasksStr
+}
+
+// "private" functions
 
 func punchIn(h History) {
   h.Type = In

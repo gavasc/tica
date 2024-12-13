@@ -1,17 +1,17 @@
 package main
 
 type Task struct {
-  Id        uint
-  Code      string
-  Desc      string
-  totalTime int //stored in seconds
+  Id          uint
+  Code        string
+  Description string
+  TotalTime   int `db:"total_time"` //stored in seconds
 }
 
 func (t Task) Create() {
   db := connectDb()
   defer db.Close()
 
-  db.MustExec("INSERT INTO tasks (code, total_time) VALUES (?, 0)", t.Code)
+  db.MustExec("INSERT INTO tasks (code, description, total_time) VALUES (?, '(no description)', 0)", t.Code)
 }
 
 func (t *Task) GetIdByCode() error {
@@ -52,4 +52,15 @@ func (t Task) AddToTotal(seconds int) error {
   db.MustExec("UPDATE tasks SET total_time=? WHERE id=?", newTotal, t.Id)
 
   return nil
+}
+
+func (Task) GetAll() ([]Task, error) {
+  db := connectDb()
+  defer db.Close()
+  
+  tasks := []Task{}
+
+  err := db.Select(&tasks, "SELECT * FROM tasks;")
+
+  return tasks, err
 }

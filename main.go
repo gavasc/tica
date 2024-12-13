@@ -12,10 +12,12 @@ func main() {
   switch command {
     case "punch":
       if len(args) >= 3 {
-        punchHandler(args[2:])
+        PunchHandler(args[2:])
       } else {
         fmt.Println("Missing task code!")
       }
+    case "list":
+      fmt.Println(ListHandler())
   }
 }
 

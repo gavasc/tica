@@ -64,3 +64,10 @@ func (Task) GetAll() ([]Task, error) {
 
   return tasks, err
 }
+
+func (t Task) Delete() {
+  db := connectDb()
+  defer db.Close()
+
+  db.MustExec("DELETE FROM tasks WHERE code=?", t.Code)
+}

@@ -1,2 +1,2 @@
-./data.db
-./tica
+*.db
+tica

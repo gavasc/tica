@@ -45,6 +45,13 @@ func ListHandler() string {
   return tasksStr
 }
 
+func DeleteHandler(task string) {
+  t := Task{Code: task}
+  if t.Exists() {
+    t.Delete()
+    fmt.Printf("Task %s deleted!", task)
+  }
+}
 // "private" functions
 
 func punchIn(h History) {

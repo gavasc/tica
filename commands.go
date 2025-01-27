@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"time"
+	"fmt"
 )
 
 func PunchHandler(args []string) {
@@ -31,6 +31,7 @@ func PunchHandler(args []string) {
   }
 }
 
+// Gets all the tasks from the db, appends each one to a string and returns that string 
 func ListHandler() string {
   tasks, err := Task{}.GetAll()
   if err != nil {
@@ -49,9 +50,10 @@ func DeleteHandler(task string) {
   t := Task{Code: task}
   if t.Exists() {
     t.Delete()
-    fmt.Printf("Task %s deleted!", task)
+    fmt.Printf("Task %s deleted!\n", task)
   }
 }
+
 // "private" functions
 
 func punchIn(h History) {
@@ -64,5 +66,5 @@ func punchOut(h History, t Task) {
   timeSpent := int(time.Now().Unix()) -  h.LastPunchTime()
   h.Punch()
   t.AddToTotal(timeSpent)
-  fmt.Printf("Time spent in %s: %ds", t.Code, timeSpent)
+  fmt.Printf("Time spent in %s: %ds\n", t.Code, timeSpent)
 }

@@ -1,12 +1,12 @@
 package main
 
 import (
-  "github.com/jmoiron/sqlx"
-  _ "modernc.org/sqlite"
+	"github.com/jmoiron/sqlx"
+	_ "modernc.org/sqlite"
 )
 
 const (
-  createDbQuery = `CREATE TABLE IF NOT EXISTS tasks (
+	createDbQuery = `CREATE TABLE IF NOT EXISTS tasks (
     id INTEGER PRIMARY KEY,
     code TEXT,
     description TEXT,
@@ -22,11 +22,8 @@ const (
 )
 
 func connectDb() *sqlx.DB {
-  var db *sqlx.DB
+	db := sqlx.MustConnect("sqlite", "./data.db")
+	db.MustExec(createDbQuery)
 
-  db = sqlx.MustConnect("sqlite", "./data.db")
-  db.MustExec(createDbQuery)
-
-  return db
+	return db
 }
-

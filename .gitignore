@@ -1,2 +1,4 @@
 *.db
 tica
+# Added by goreleaser init:
+dist/

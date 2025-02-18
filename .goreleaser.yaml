@@ -47,10 +47,11 @@ changelog:
 
 brews:
 - name: tica
-  homepage: https://github.com/gavasc/homebrew-taps 
-  tap:
+  homepage: https://github.com/gavasc/homebrew-taps
+  repository:
     owner: gavasc
     name: homebrew-taps
+    token: "{{ .Env.GITHUB_TOKEN}}"
 
 release:
   footer: >-

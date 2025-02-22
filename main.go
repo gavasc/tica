@@ -2,10 +2,17 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 )
 
 func main() {
+	homeDir, _ := os.UserHomeDir()
+	err := os.Mkdir(homeDir+"/.tica", 0777)
+	if err != nil && !os.IsExist(err) {
+		log.Fatal("Error creating dir: " + err.Error())
+	}
+
 	args := os.Args
 	if len(args) <= 1 {
 		fmt.Println("Missing command!")

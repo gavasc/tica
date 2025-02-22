@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/jmoiron/sqlx"
 	_ "modernc.org/sqlite"
 )
@@ -16,13 +18,14 @@ const (
     id INTEGER PRIMARY KEY,
     timestamp INTEGER,
     punch_type INTEGER,
-    task_id, INTEGER,
+    task_id INTEGER,
     FOREIGN KEY (task_id) REFERENCES tasks(id)
   );`
 )
 
 func connectDb() *sqlx.DB {
-	db := sqlx.MustConnect("sqlite", "./data.db")
+	homeDir, _ := os.UserHomeDir()
+	db := sqlx.MustConnect("sqlite", homeDir+"/.tica/data.db")
 	db.MustExec(createDbQuery)
 
 	return db

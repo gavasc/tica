@@ -23,10 +23,16 @@ const (
   );`
 )
 
+func CreateDb() {
+	db := connectDb()
+	defer db.Close()
+
+	db.MustExec(createDbQuery)
+}
+
 func connectDb() *sqlx.DB {
 	homeDir, _ := os.UserHomeDir()
 	db := sqlx.MustConnect("sqlite", homeDir+"/.tica/data.db")
-	db.MustExec(createDbQuery)
 
 	return db
 }

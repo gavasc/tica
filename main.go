@@ -13,6 +13,8 @@ func main() {
 		log.Fatal("Error creating dir: " + err.Error())
 	}
 
+	CreateDb()
+
 	args := os.Args
 	if len(args) <= 1 {
 		fmt.Println("Missing command!")

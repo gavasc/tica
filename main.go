@@ -30,7 +30,7 @@ func main() {
 			fmt.Println("Missing task code!")
 		}
 	case "list":
-		fmt.Println(ListHandler())
+		ListHandler()
 	case "delete":
 		if len(args) >= 3 {
 			DeleteHandler(args[2])
